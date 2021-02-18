@@ -9,24 +9,26 @@ get_header();
     <div class="page-banner__content container container--narrow">
       <h1 class="page-banner__title">
       
-        Todos los eventos
+        Past Event
       
       </h1>
       <div class="page-banner__intro">
-        <p>Estos son todos nuestros eventosss</p>
+        <p>Our past event</p>
       </div>
     </div>  
   </div>
 
   <div class="container container--narrow page-section">
 
+
+    
+
     <?php
 
-
 $today = date('Ymd');
-$homePageEvents = new WP_Query(array(
-  'paged' => get_query_var('paged',3),
-  'posts_per_page' => 2,
+$pastEvents = new WP_Query(array(
+'paged' => get_query_var('paged',1),
+  'posts_per_page' => 3,
   'post_type' => 'event',
   'meta_key' => 'event_date',
   'orderby' => 'meta_value',
@@ -34,7 +36,7 @@ $homePageEvents = new WP_Query(array(
   'meta_query' => array(
     array(
       'key' => 'event_date',
-      'compare' => '>=',
+      'compare' => '<',
       'value' => $today,
       'type' => 'numeric'
 
@@ -42,8 +44,9 @@ $homePageEvents = new WP_Query(array(
   )
 ));
 
-        while($homePageEvents->have_posts()){
-          $homePageEvents->the_post(); ?>
+
+        while($pastEvents->have_posts()){
+          $pastEvents->the_post(); ?>
 
 
 <div class="event-summary">
@@ -74,17 +77,13 @@ $homePageEvents = new WP_Query(array(
           <?php
         }
 
+    echo paginate_links(
 
-        echo paginate_links(array(
-
-          'total' => $homePageEvents->max_num_pages
-      
-        ));
+        array(
+            'total' => $pastEvents->max_num_pages 
+        )
+    );
     ?>
-
-    <hr class="section-break">
-
-    <p>mira los eventos anterioes <a href="<?php echo site_url('/past-event') ?>">ver los eventos anteoriores</a> </p>
 
   </div>
 
