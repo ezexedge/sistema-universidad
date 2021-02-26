@@ -1,22 +1,14 @@
 <?php
 
 get_header();
+pageBanner(array(
+  'title'=> 'All events',
+  'subtitle' => 'informacion de todos los eventos'
+));
+
 
 ?>
 
-<div class="page-banner">
-    <div class="page-banner__bg-image" style="background-image: url(<?php echo get_theme_file_uri('/images/ocean.jpg')?>);"></div>
-    <div class="page-banner__content container container--narrow">
-      <h1 class="page-banner__title">
-      
-        Todos los eventos
-      
-      </h1>
-      <div class="page-banner__intro">
-        <p>Estos son todos nuestros eventosss</p>
-      </div>
-    </div>  
-  </div>
 
   <div class="container container--narrow page-section">
 
@@ -43,35 +35,12 @@ $homePageEvents = new WP_Query(array(
 ));
 
         while($homePageEvents->have_posts()){
-          $homePageEvents->the_post(); ?>
+          $homePageEvents->the_post(); 
 
 
-<div class="event-summary">
-<a class="event-summary__date t-center" href="#">
-              <span class="event-summary__month">
-                <?php
-                
-                $eventDate = new DateTime(get_field('event_date'));
+          get_template_part('template-parts/content','event');
+          
 
-                echo $eventDate->format('M');
-
-                ?>
-              </span>
-              <span class="event-summary__day"><?php
-
-                echo $eventDate->format('d');
-              
-              ?></span>
-            </a>
-            <div class="event-summary__content s">
-              <h5 class="event-summary__title headline headline--tiny"><a href="<?php the_permalink();?>"><?php the_title();?></a></h5>
-              <p><?php  wp_trim_words(get_the_content(),18); ?> <a href="#" class="nu gray">Learn more</a></p>
-            </div>
-          </div>
-
-
-
-          <?php
         }
 
 
