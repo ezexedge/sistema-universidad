@@ -44,7 +44,7 @@ class Search {
 
     this.previousValue = this.searchField.val()
   }
-
+/*
   getResults() {
 
     $.getJSON("http://localhost:8888/universidad/wp-json/wp/v2/posts?search=" + this.searchField.val() , (posts)=>{
@@ -54,6 +54,7 @@ class Search {
     })
   }
 
+  */
   getResults() {
     $.when($.getJSON("http://localhost:8888/universidad/wp-json/wp/v2/posts?search=" + this.searchField.val()), $.getJSON("http://localhost:8888/universidad/wp-json/wp/v2/pages?search=" + this.searchField.val())).then(
       (posts, pages) => {
