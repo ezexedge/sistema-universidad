@@ -100,4 +100,31 @@ function university_adjust_queries($query){
 
 add_action('pre_get_posts','university_adjust_queries');
 
+
+function redirectSubsToFrontend() {
+    $ourCurrentUser = wp_get_current_user();
+ 
+    if(count($ourCurrentUser -> roles) == 1 AND $ourCurrentUser -> roles[0] == 'subscriber') {
+        wp_redirect(site_url('/'));
+        exit;
+    }
+}
+
+add_action('admin_init','redirectSubsToFrontEnd');
+
+
+
+
+function noSubsAdminBar() {
+    $ourCurrentUser = wp_get_current_user();
+ 
+    if(count($ourCurrentUser -> roles) == 1 AND $ourCurrentUser -> roles[0] == 'subscriber') {
+
+        show_admin_bar(false);
+        }
+}
+
+
+add_action('wp_loaded','noSubsAdminBar');
+
 ?>
